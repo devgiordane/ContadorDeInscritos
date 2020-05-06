@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+      body {
+        height: 100vh;
+        margin: 0;
+        background: red;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Share Tech Mono", monospace;
+        text-align: center;
+      }
+      img {
+        height: auto;
+        width: 50%;
+      }
+      p {
+        font-size: 40px;
+      }
+      h1 {
+        font-size: 80px;
+        margin: 0;
+      }
+      h2 {
+        font-size: 40px;
+      }
+      h2::before {
+        content: "";
+        animation: mensagem 3s linear infinite alternate;
+      }
+      @keyframes mensagem {
+        0% {
+          content: "DEVS";
+        }
+        50% {
+          color: red;
+        }
+        100% {
+          content: "MUITO OBRIGADO!";
+        }
+      }
+      #app {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .botao {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .botao a {
+        position: absolute;
+        color: white;
+        font-family: "Share Tech Mono", monospace;
+        text-decoration: none;
+        font-size: 40px;
+        background: #3b3b3b;
+        padding: 10px;
+        border-bottom: 20px solid #2c2c2c;
+        transition: 1s;
+      }
+      .botao a:hover {
+        background: red;
+        border-bottom: 1px solid red;
+        transform: translateY(20px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <img src="logo.png" alt="" />
+      <p>Já somos mais de</p>
+      <h1>{{subs}}</h1>
+      <h2 title="DEVS"></h2>
+      <div class="botao">
+        <a href="https://www.youtube.com/channel/UCANI94YmcIGmabIDPx5oHYg/"
+          >INSCREVA-SE</a
+        >
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          inscritos: 100,
+          countSubs: 0,
+        },
+
+        computed: {
+          subs: function () {
+            let subs = this.countSubs;
+            if (this.countSubs <= this.inscritos) {
+              setTimeout(() => {
+                this.countSubs = this.countSubs + 10;
+              }, 1);
+            }
+
+            return subs;
+          },
+        },
+        mounted() {
+          axios.get("http://127.0.0.1:5000/").then((res) => {
+            this.inscritos = res.data.items[0]["statistics"].subscriberCount;
+          });
+        },
+      });
+    </script>
+  </body>
+</html>
