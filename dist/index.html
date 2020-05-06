@@ -112,9 +112,11 @@
           },
         },
         mounted() {
-          axios.get("http://127.0.0.1:5000/").then((res) => {
-            this.inscritos = res.data.items[0]["statistics"].subscriberCount;
-          });
+          axios
+            .get("https://contadordeinscritos.herokuapp.com/")
+            .then((res) => {
+              this.inscritos = res.data.items[0]["statistics"].subscriberCount;
+            });
         },
       });
     </script>
