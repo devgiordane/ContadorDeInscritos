@@ -11,7 +11,6 @@ autopep8 = "*"
 requests = "*"
 flask = "*"
 flask-cors = "*"
-dotenv = "*"
 
 [requires]
 python_version = "3.8"
